@@ -1,0 +1,13 @@
+{
+  "module_id": "biotinker:viam-camera-host",
+  "visibility": "public",
+  "url": "https://github.com/biotinker/viam-camera-host/",
+  "description": "This is a module which will host a Viam camera as an updating jpg via a webserver on a given port.",
+  "models": [
+    {
+      "api": "rdk:component:generic",
+      "model": "biotinker:generic:camerahost"
+    }
+  ],
+  "entrypoint": "run.sh"
+}
