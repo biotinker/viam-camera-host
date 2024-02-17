@@ -15,7 +15,7 @@ Add the module to your robot from the Viam registry. The component may then be a
       "name": "componentNameHere",
       "model": "biotinker:generic:camerahost",
       "type": "generic",
-      "namespace": "rdk",
+      "namespace": "biotinker",
       "attributes": {
         "port": 9003,
         "camera": "cameraName"
