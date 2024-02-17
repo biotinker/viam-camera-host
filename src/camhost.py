@@ -103,7 +103,7 @@ class CAMHOST(Generic, Reconfigurable):
             await asyncio.sleep(self.refresh)
             try:
                 image = await self.cam.get_image()
-                image.save(self.dirpath + "/next.jpg")
+                image.save(self.dirpath + "/next.jpg", 'JPEG', quality=100)
                 os.replace(self.dirpath + "/next.jpg", self.dirpath + "/current.jpg")
             except Exception as e:
                 LOGGER.error("failed to get and save image: {}".format(e))
