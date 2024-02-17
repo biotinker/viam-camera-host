@@ -52,9 +52,15 @@ class CAMHOST(Generic, Reconfigurable):
     def reconfigure(self, config: ComponentConfig, dependencies: Mapping[ResourceName, ResourceBase]):
         cam_name = config.attributes.fields["camera"].string_value
         port = int(config.attributes.fields["port"].number_value)
+        
+        refresh = config.attributes.fields["refresh"].number_value
+        if refresh <= 0:
+            refresh = 5
+        
         cam = dependencies[Camera.get_resource_name(cam_name)]
         self.cam = cam
         self.dirpath = tempfile.mkdtemp()
+        self.refresh = refresh
         if self.running:
             LOGGER.info("Shutting server down")
             self.server.shutdown()
@@ -94,7 +100,7 @@ class CAMHOST(Generic, Reconfigurable):
     async def next_image(self):
         os.chdir(self.dirpath)
         while(1):
-            await asyncio.sleep(5)
+            await asyncio.sleep(self.refresh)
             try:
                 image = await self.cam.get_image()
                 image.save(self.dirpath + "/next.jpg")
