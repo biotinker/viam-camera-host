@@ -59,7 +59,7 @@ class CAMHOST(Generic, Reconfigurable):
         
         cam = dependencies[Camera.get_resource_name(cam_name)]
         self.cam = cam
-        self.dirpath = tempfile.mkdtemp()
+        self.dirpath = tempfile.mkdtemp(dir="/dev/shm/")
         self.refresh = refresh
         if self.running:
             LOGGER.info("Shutting server down")
