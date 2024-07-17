@@ -11,6 +11,7 @@ from viam.components.camera import Camera
 from viam.components.generic import Generic
 from viam.logging import getLogger
 from viam.utils import struct_to_dict, dict_to_struct, ValueTypes
+from viam.media.utils.pil import pil_to_viam_image, viam_to_pil_image
 
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 
@@ -102,7 +103,8 @@ class CAMHOST(Generic, Reconfigurable):
         while(1):
             await asyncio.sleep(self.refresh)
             try:
-                image = await self.cam.get_image()
+                viam_image = await self.cam.get_image()
+                image = viam_to_pil_image(viam_image)
                 image.save(self.dirpath + "/next.jpg", 'JPEG', quality=100)
                 os.replace(self.dirpath + "/next.jpg", self.dirpath + "/current.jpg")
             except Exception as e:
